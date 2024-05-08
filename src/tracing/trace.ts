@@ -5,7 +5,7 @@ import {
   ConsoleSpanExporter,
   SpanExporter,
 } from "@opentelemetry/sdk-trace-base";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 import { WorkflowRunJobs } from "../github";
 import { Resource } from "@opentelemetry/resources";
@@ -63,6 +63,7 @@ export function createTracerProvider(
     exporter = new OTLPTraceExporter({
       url: otlpEndpoint,
       //credentials: grpc.credentials.createSsl(),
+      headers: {},
     });
   }
 
