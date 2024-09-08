@@ -8,6 +8,8 @@ import {
 } from "../github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
+const resultEnvVar = process.env.RESULT || 'unknown';
+
 export type TraceWorkflowRunStepParams = {
   job: WorkflowRunJob;
   trace: TraceAPI;
@@ -48,6 +50,7 @@ export async function traceWorkflowRunStep({
         "github.job.step.started_at": step.started_at || undefined,
         "github.job.step.completed_at": step.completed_at || undefined,
         "github.job.step.id": step.id,
+        'result': resultEnvVar,
         error: step.conclusion === "failure",
       },
       startTime,
