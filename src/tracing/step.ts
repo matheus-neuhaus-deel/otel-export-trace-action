@@ -50,7 +50,7 @@ export async function traceWorkflowRunStep({
         "github.job.step.started_at": step.started_at || undefined,
         "github.job.step.completed_at": step.completed_at || undefined,
         "github.job.step.id": step.id,
-        'result': resultEnvVar,
+        "final_result_overall": resultEnvVar,
         error: step.conclusion === "failure",
       },
       startTime,
