@@ -18,6 +18,8 @@ import {
 
 import { traceWorkflowRunStep } from "./step";
 
+const resultEnvVar = process.env.RESULT || 'unknown';
+
 export type TraceWorkflowRunJobsParams = {
   provider: BasicTracerProvider;
   workflowRunJobs: WorkflowRunJobs;
@@ -61,6 +63,7 @@ export async function traceWorkflowRunJobs({
           [`${prefix}.base.sha`]: pr.base.sha,
           [`${prefix}.base.repo.id`]: pr.base.repo.id,
           [`${prefix}.base.repo.url`]: pr.base.repo.url,
+          [`final_result_overall`]: resultEnvVar,
           [`${prefix}.base.repo.name`]: pr.base.repo.name,
         };
       },
@@ -112,6 +115,7 @@ export async function traceWorkflowRunJobs({
         "github.head_ref": headRef,
         "github.base_ref": baseRef,
         "github.base_sha": baseSha,
+        "final_result_overall": resultEnvVar,
         error: workflowRunJobs.workflowRun.conclusion === "failure",
         ...pull_requests,
       },
@@ -199,6 +203,7 @@ async function traceWorkflowRunJob({
         "github.job.started_at": job.started_at || undefined,
         "github.job.completed_at": job.completed_at || undefined,
         "github.conclusion": job.conclusion || undefined,
+        "final_result_overall": resultEnvVar,
         error: job.conclusion === "failure",
       },
       startTime,
